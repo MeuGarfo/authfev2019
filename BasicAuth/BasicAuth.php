@@ -10,8 +10,9 @@ use Medoo\Medoo;
 class BasicAuth
 {
     private $db;
+
     function __construct($db){
-        $this->setDb(($db);
+        $this->setDb(($db));
     }
     private function setDb($db){
         $this->db = new Medoo([
@@ -69,7 +70,7 @@ class BasicAuth
         ];
         $user=$this->db->get('user','*',$where);
         if(!$user){
-            $error[]='invalid_email'
+            $error[]='invalid_email';
         }
         if (password_verify($password, $user['password'])) {
             $id=$user['id'];
@@ -120,7 +121,7 @@ class BasicAuth
                         return $this->signin();
                     }
                 }else{
-                    $error[]='invalid_password'
+                    $error[]='invalid_password';
                 }
             }else{
                 $error[]='invalid_email';
