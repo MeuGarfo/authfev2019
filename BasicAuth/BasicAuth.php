@@ -31,7 +31,7 @@ class BasicAuth
         if(!isset($_COOKIE['id'])){
             return false;
         }
-        if(!isset($_COOKIE['toke'])){
+        if(!isset($_COOKIE['token'])){
             return false;
         }
         $where['AND']=[
