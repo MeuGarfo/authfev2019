@@ -59,6 +59,7 @@ class BasicAuth
             ];
             $this->db->update('user', $data, ['id'=>$user['id']]);
         }
+        return true;
     }
     public function signin(){
         $this->logout();
