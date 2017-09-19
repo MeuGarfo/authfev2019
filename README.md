@@ -16,10 +16,6 @@ $db=[
 	'password'=>''
 ];
 $BasicAuth=new BasicAuth($db);
-$user=$BasicAuth->isAuth();
-if($user){
-	print 'Olá '.$user['name'];
-}
 ```
 
 ## Tabela user
@@ -32,11 +28,27 @@ token
 token_expiration
 ```
 
-## Erros de signin
-- invalid_email
-- invalid_password
+## Dados do usuário
+Retorna os dados do usuário ou false
+	$user=$BasicAuth->isAuth();
 
-## Erros de signup
+## Logout
+Retorna sempre true
+	$user=$BasicAuth->logout();
+
+## Signup
+Retorna os dados do usuário ou um array com as mensagens de erro 
+	$user=BasicAuth->signup();
+## Mensagens de erro de signup
 - invalid_name (apenas letras, números e espaços)
 - invalid_email
 - invalid_password (maior ou igual a 8 caracteres)
+
+## Signin
+Retorna os dados do usuário ou um array com as mensagens de erro 
+	$user=$BasicAuth->signin();
+
+## Mensagens de erro de signin
+- invalid_email
+- invalid_password
+
