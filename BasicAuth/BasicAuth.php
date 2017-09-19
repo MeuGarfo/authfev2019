@@ -2,15 +2,6 @@
 /**
  * User: Anderson Ismael
  * Date: 19/set/2017
- * 
- * Signin erros:
- * invalid_email
- * invalid_password
- * 
- * Signup erros:
- * invalid_name
- * invalid_email
- * invalid_password
  */
 namespace BasicAuth;
 
