@@ -16,6 +16,6 @@ token_expiration
 - invalid_password
 
 ## Erros de signup
-- invalid_name
+- invalid_name (letras, números e espaços)
 - invalid_email
-- invalid_password
+- invalid_password (maior ou igual a 8 caracteres)
