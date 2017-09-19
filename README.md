@@ -1,6 +1,24 @@
 # basicauth
 :lock: Sistema básico de autenticação
 
+## Composer
+	composer require basicauth/basicauth
+	
+## Instalação
+```
+<?php
+require 'vendor/autoload.php';
+user BasicAuth\BasicAuth;
+$db=[
+
+];
+$BasicAuth=new BasicAuth($db);
+$user=$BasicAuth->isAuth();
+if($user){
+	print 'Olá '.$user['name'];
+}
+```
+
 ## Tabela user
 ```
 id
