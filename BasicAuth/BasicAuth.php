@@ -7,5 +7,17 @@ namespace BasicAuth;
 
 class BasicAuth
 {
+    public function isAuth(){
+        
+    }
+    public function logout(){
+        
+    }
+    public function signin(){
+        
+    }
+    public function signup(){
+        
+    }
 }
 
