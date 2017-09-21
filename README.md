@@ -3,19 +3,19 @@
 
 ## Composer
 	composer require basicauth/basicauth
-	
+
 ## Instalação
 ```
 <?php
 require 'vendor/autoload.php';
-user BasicAuth\BasicAuth;
+user Basic\Auth;
 $db=[
 	'server'=>'localhost',
 	'name'=>'test',
 	'user'=>'root',
 	'password'=>''
 ];
-$BasicAuth=new BasicAuth($db);
+$BasicAuth=new Auth($db);
 ```
 
 ## Tabela user
@@ -39,7 +39,7 @@ Retorna sempre true
 	$user=$BasicAuth->logout();
 
 ## Signup
-Retorna os dados do usuário ou um array com as mensagens de erro 
+Retorna os dados do usuário ou um array com as mensagens de erro
 
 	$user=BasicAuth->signup();
 
@@ -49,11 +49,10 @@ Retorna os dados do usuário ou um array com as mensagens de erro
 - invalid_password (maior ou igual a 8 caracteres)
 
 ## Signin
-Retorna os dados do usuário ou um array com as mensagens de erro 
+Retorna os dados do usuário ou um array com as mensagens de erro
 
 	$user=$BasicAuth->signin();
 
 ## Mensagens de erro de signin
 - invalid_email
 - invalid_password
-

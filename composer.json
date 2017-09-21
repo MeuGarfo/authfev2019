@@ -1,14 +1,14 @@
 {
-	"name" : "basicauth/basicauth",
+	"name" : "basic/auth",
 	"description" : "Sistema básico de autenticação",
 	"minimum-stability" : "stable",
 	"license" : "MIT",
 	"require" : {
 		"catfan/medoo" : "^1.4"
 	},
-	"autoload" : {
-		"psr-4" : {
-			"BasicAuth\\" : "BasicAuth/"
-		}
-	}
+    "autoload" : {
+        "psr-4" : {
+            "Basic\\" : "/src"
+        }
+    }
 }
