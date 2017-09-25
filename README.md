@@ -1,4 +1,4 @@
-# basicauth
+# auth
 :lock: Sistema básico de autenticação
 
 ## Composer
