@@ -124,6 +124,7 @@ class Auth
                             'password'=>$user['password']
                         ];
                         if(isset($user['type'])){
+                            $user['type']=trim(strtolower($user['type']));
                             if(
                                 $user['type']=='admin' ||
                                 $user['type']=='super' ||
@@ -131,12 +132,12 @@ class Auth
                             ){
                                 $data['type']=$user['type'];
                             }else{
-                                $data['type']=$user['user'];
+                                $data['type']='user';
                             }
                         }
-                        $this->db->insert('user', $user);
+                        $this->db->insert('user', $data);
                         $id=$this->db->id();
-                        if(is_numeric($id)){
+                        if(is_numeric($id) && $id<>0){
                             if(isset($_POST['email']) && isset($_POST['password'])){
                                 $this->signin();
                             }else{
