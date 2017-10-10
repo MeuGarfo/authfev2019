@@ -12,9 +12,9 @@ class Auth
     private $db;
 
     function __construct($db){
-        $this->setDb(($db));
+        $this->set_db(($db));
     }
-    private function setDb($db){
+    private function set_db($db){
         $this->db = new Medoo([
             // required
             'database_type' => 'mysql',
@@ -27,7 +27,7 @@ class Auth
             'port' => 3306
         ]);
     }
-    public function isAuth(){
+    public function is_auth(){
         if(!isset($_COOKIE['id'])){
             return false;
         }
@@ -50,7 +50,7 @@ class Auth
         }
     }
     public function logout(){
-        $user=$this->isAuth();
+        $user=$this->is_auth();
         setcookie("token", "", time()-3600,'/');
         setcookie("id", "", time()-3600,'/');
         if($user){
