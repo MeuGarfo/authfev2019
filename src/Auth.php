@@ -135,10 +135,15 @@ class Auth
                             }
                         }
                         $this->db->insert('user', $user);
-                        if(isset($_POST['email']) && isset($_POST['password'])){
-                            $this->signin();
+                        $id=$this->db->id();
+                        if(is_numeric($id)){
+                            if(isset($_POST['email']) && isset($_POST['password'])){
+                                $this->signin();
+                            }else{
+                                return $id;
+                            }
                         }else{
-                            return true;
+                            return false;
                         }
                     }
                 }else{
