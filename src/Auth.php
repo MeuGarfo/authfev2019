@@ -118,13 +118,28 @@ class Auth
                     if ($this->db->get('user','*', ['email'=>$user['email']])) {
                         $error[]='invalid_email';
                     } else {
-                        $user=[
+                        $data=[
                             'email'=>$user['email'],
                             'name'=>$user['name'],
                             'password'=>$user['password']
                         ];
+                        if(isset($user['type'])){
+                            if(
+                                $user['type']=='admin' ||
+                                $user['type']=='super' ||
+                                $user['type']=='user'
+                            ){
+                                $data['type']=$user['type'];
+                            }else{
+                                $data['type']=$user['user'];
+                            }
+                        }
                         $this->db->insert('user', $user);
-                        return $this->signin();
+                        if(isset($_POST['email']) && isset($_POST['password'])){
+                            $this->signin();
+                        }else{
+                            return true;
+                        }
                     }
                 }else{
                     $error[]='invalid_password';
