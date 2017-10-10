@@ -1,8 +1,8 @@
 <?php
 /**
- * User: Anderson Ismael
- * Date: 19/set/2017
- */
+* User: Anderson Ismael
+* Date: 19/set/2017
+*/
 namespace Basic;
 
 use Medoo\Medoo;
@@ -96,15 +96,20 @@ class Auth
             return ['error'=>$error];
         }
     }
-    public function signup(){
+    public function signup($user=false){
         $this->logout();
         $user['created_at']=time();
-        $user['name']=trim($_POST['name']);
+        if($user===false){
+            $user=[
+                'name'=>@$_POST['name'],
+                'email'=>@$_POST['email'],
+                'password'=>@$_POST['password']
+            ];
+        }
+        $user['name']=trim($user['name']);
         $user['name']=strtolower($user['name']);
         $user['name']=ucfirst($user['name']);
         $user['name']=preg_replace('/\s+/', ' ',$user['name']);
-        $user['email']=@$_POST['email'];
-        $user['password']=@$_POST['password'];
         $error=false;
         if(preg_match('/^[a-z0-9 .\-]+$/i', $user['name']) && strlen($user['name'])>=3){
             if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
