@@ -1,20 +1,26 @@
 <?php
 /**
-* User: Anderson Ismael
-* Date: 19/set/2017
+* Basic
+* Micro framework em PHP
 */
+
 namespace Basic;
 
 use Medoo\Medoo;
 
+/**
+ * Classe Auth
+ */
 class Auth
 {
     private $db;
 
-    function __construct($db){
-        $this->set_db(($db));
-    }
-    private function set_db($db){
+    /**
+     * Seta a variável $db
+     * @param array $db Dados SQL
+     */
+    public function __construct(array $db)
+    {
         $this->db = new Medoo([
             // required
             'database_type' => 'mysql',
@@ -27,18 +33,23 @@ class Auth
             'port' => 3306
         ]);
     }
-    public function is_auth(){
-        if(!isset($_COOKIE['id'])){
+    /**
+    * Verifica se o usuário está autenticado
+    * @return mixed Retorna os dados dele caso esteja ou retorna false
+    */
+    public function isAuth():mixed
+    {
+        if (!isset($_COOKIE['id'])) {
             return false;
         }
-        if(!isset($_COOKIE['token'])){
+        if (!isset($_COOKIE['token'])) {
             return false;
         }
         $where['AND']=[
             'id'=>@$_COOKIE['id'],
             'token'=>@$_COOKIE['token']
         ];
-        $user=$this->db->get('user','*', $where);
+        $user=$this->db->get('user', '*', $where);
         if (isset($user['token_expiration'])) {
             if ($user['token_expiration']>time()) {
                 return $user;
@@ -49,11 +60,16 @@ class Auth
             return false;
         }
     }
-    public function logout(){
-        $user=$this->is_auth();
-        setcookie("token", "", time()-3600,'/');
-        setcookie("id", "", time()-3600,'/');
-        if($user){
+    /**
+    * Faz o logout do usuaŕio
+    * @return bool Retorna true ou false
+    */
+    public function logout():bool
+    {
+        $user=$this->isAuth();
+        setcookie("token", "", time()-3600, '/');
+        setcookie("id", "", time()-3600, '/');
+        if ($user) {
             $data=[
                 'token_expiration'=>time()-3600
             ];
@@ -61,7 +77,12 @@ class Auth
         }
         return true;
     }
-    public function signin(){
+    /**
+    * Autentica o usuário baseado nas variáveis $_POST
+    * @return mixed Dados do usuário ou mensagens de erro
+    */
+    public function signin():mixed
+    {
         $this->logout();
         $email=@$_POST['email'];
         $password=@$_POST['password'];
@@ -69,11 +90,11 @@ class Auth
         $where=[
             'email'=>$email
         ];
-        $user=$this->db->get('user','*',$where);
-        if(!$user){
+        $user=$this->db->get('user', '*', $where);
+        if (!$user) {
             $error[]='invalid_email';
         }
-        if (password_verify($password, $user['password'])) {
+        if (passwordVerify($password, $user['password'])) {
             $id=$user['id'];
             $min=60;
             $hora=60*$min;
@@ -86,20 +107,26 @@ class Auth
                 'token_expiration'=>$limit
             ];
             $this->db->update('user', $data, ['id'=>$id]);
-            setcookie("id", $id, $limit,'/');
-            setcookie("token", $token, $limit,'/');
-            return $this->db->get("user","*",['id'=>$id]);
+            setcookie("id", $id, $limit, '/');
+            setcookie("token", $token, $limit, '/');
+            return $this->db->get("user", "*", ['id'=>$id]);
         } else {
             $error[]='invalid_password';
         }
-        if($error){
+        if ($error) {
             return ['error'=>$error];
         }
     }
-    public function signup($user=false){
+    /**
+    * Cadastra de usuário baseado nas variáveis $_POST e no parâmetro $user
+    * @param  boolean $user Dados do usuário
+    * @return mixed         Faz o signin criando o token de autenticação
+    */
+    public function signup($user=false):mixed
+    {
         $this->logout();
         $user['created_at']=time();
-        if($user===false){
+        if ($user===false) {
             $user=[
                 'name'=>@$_POST['name'],
                 'email'=>@$_POST['email'],
@@ -109,13 +136,13 @@ class Auth
         $user['name']=trim($user['name']);
         $user['name']=strtolower($user['name']);
         $user['name']=ucfirst($user['name']);
-        $user['name']=preg_replace('/\s+/', ' ',$user['name']);
+        $user['name']=preg_replace('/\s+/', ' ', $user['name']);
         $error=false;
-        if(preg_match('/^[a-z0-9 .\-]+$/i', $user['name']) && strlen($user['name'])>=3){
+        if (preg_match('/^[a-z0-9 .\-]+$/i', $user['name']) && strlen($user['name'])>=3) {
             if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
-                if(strlen($user['password'])>=8){
+                if (strlen($user['password'])>=8) {
                     $user['password']=password_hash($user['password'], PASSWORD_DEFAULT);
-                    if ($this->db->get('user','*', ['email'=>$user['email']])) {
+                    if ($this->db->get('user', '*', ['email'=>$user['email']])) {
                         $error[]='invalid_email';
                     } else {
                         $data=[
@@ -123,40 +150,40 @@ class Auth
                             'name'=>$user['name'],
                             'password'=>$user['password']
                         ];
-                        if(isset($user['type'])){
+                        if (isset($user['type'])) {
                             $user['type']=trim(strtolower($user['type']));
-                            if(
+                            if (
                                 $user['type']=='admin' ||
                                 $user['type']=='super' ||
                                 $user['type']=='user'
-                            ){
+                            ) {
                                 $data['type']=$user['type'];
-                            }else{
+                            } else {
                                 $data['type']='user';
                             }
                         }
                         $this->db->insert('user', $data);
                         $id=$this->db->id();
-                        if(is_numeric($id) && $id<>0){
-                            if(isset($_POST['email']) && isset($_POST['password'])){
+                        if (is_numeric($id) && $id<>0) {
+                            if (isset($_POST['email']) && isset($_POST['password'])) {
                                 $this->signin();
-                            }else{
+                            } else {
                                 return $id;
                             }
-                        }else{
+                        } else {
                             return false;
                         }
                     }
-                }else{
+                } else {
                     $error[]='invalid_password';
                 }
-            }else{
+            } else {
                 $error[]='invalid_email';
             }
-        }else{
+        } else {
             $error[]='invalid_name';
         }
-        if($error){
+        if ($error) {
             return ['error'=>$error];
         }
     }
