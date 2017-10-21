@@ -10,10 +10,10 @@
 require 'vendor/autoload.php';
 user Basic\Auth;
 $db=[
-	'server'=>'localhost',
-	'name'=>'test',
-	'user'=>'root',
-	'password'=>''
+	'db_server'=>'localhost',
+	'db_name'=>'test',
+	'db_user'=>'root',
+	'db_password'=>''
 ];
 $BasicAuth=new Auth($db);
 ```

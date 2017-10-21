@@ -24,10 +24,10 @@ class Auth
         $this->db = new Medoo([
             // required
             'database_type' => 'mysql',
-            'database_name' => $db['name'],
-            'server' => $db['server'],
-            'username' => $db['user'],
-            'password' => $db['password'],
+            'database_name' => $db['db_name'],
+            'server' => $db['db_server'],
+            'username' => $db['db_user'],
+            'password' => $db['db_password'],
             // [optional]
             'charset' => 'utf8',
             'port' => 3306
