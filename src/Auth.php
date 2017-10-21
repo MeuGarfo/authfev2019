@@ -64,7 +64,7 @@ class Auth
     * Faz o logout do usuaŕio
     * @return bool Retorna true ou false
     */
-    public function logout():bool
+    public function logout()
     {
         $user=$this->isAuth();
         setcookie("token", "", time()-3600, '/');
