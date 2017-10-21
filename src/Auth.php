@@ -37,7 +37,7 @@ class Auth
     * Verifica se o usuário está autenticado
     * @return mixed Retorna os dados dele caso esteja ou retorna false
     */
-    public function isAuth():mixed
+    public function isAuth()
     {
         if (!isset($_COOKIE['id'])) {
             return false;
@@ -81,7 +81,7 @@ class Auth
     * Autentica o usuário baseado nas variáveis $_POST
     * @return mixed Dados do usuário ou mensagens de erro
     */
-    public function signin():mixed
+    public function signin()
     {
         $this->logout();
         $email=@$_POST['email'];
@@ -122,7 +122,7 @@ class Auth
     * @param  boolean $user Dados do usuário
     * @return mixed         Faz o signin criando o token de autenticação
     */
-    public function signup($user=false):mixed
+    public function signup($user=false)
     {
         $this->logout();
         $user['created_at']=time();
