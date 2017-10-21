@@ -94,7 +94,7 @@ class Auth
         if (!$user) {
             $error[]='invalid_email';
         }
-        if (passwordVerify($password, $user['password'])) {
+        if (password_verify($password, $user['password'])) {
             $id=$user['id'];
             $min=60;
             $hora=60*$min;
