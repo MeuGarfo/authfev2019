@@ -1,5 +1,5 @@
 # auth
-:lock: Sistema básico de autenticação
+Sistema básico de autenticação
 
 ## Composer
 	composer require basicauth/basicauth
