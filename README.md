@@ -15,7 +15,7 @@ $db=[
 	'db_user'=>'root',
 	'db_password'=>''
 ];
-$BasicAuth=new Auth($db);
+$Auth=new Auth($db);
 ```
 
 ## Tabela user
@@ -31,12 +31,12 @@ token_expiration
 ## Dados do usuário
 Retorna os dados do usuário ou false
 
-	$user=$BasicAuth->isAuth();
+	$user=$Auth->isAuth();
 
 ## Logout
 Retorna sempre true
 
-	$user=$BasicAuth->logout();
+	$user=$Auth->logout();
 
 ## Signup
 Campos $_POST requeridos:
@@ -48,7 +48,7 @@ password
 
 Retorna os dados do usuário ou um array com as mensagens de erro
 
-	$user=BasicAuth->signup();
+	$user=$Auth->signup();
 
 ## Mensagens de erro de signup
 - invalid_name (apenas letras, números e espaços)
@@ -64,7 +64,7 @@ password
 
 Retorna os dados do usuário ou um array com as mensagens de erro
 
-	$user=$BasicAuth->signin();
+	$user=$Auth->signin();
 
 ## Mensagens de erro de signin
 - invalid_email
