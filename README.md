@@ -39,6 +39,13 @@ Retorna sempre true
 	$user=$BasicAuth->logout();
 
 ## Signup
+Campos $_POST requeridos:
+```
+name
+email
+password
+```
+
 Retorna os dados do usuário ou um array com as mensagens de erro
 
 	$user=BasicAuth->signup();
