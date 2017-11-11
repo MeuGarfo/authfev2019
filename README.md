@@ -56,6 +56,12 @@ Retorna os dados do usuário ou um array com as mensagens de erro
 - invalid_password (maior ou igual a 8 caracteres)
 
 ## Signin
+Campos $_POST requeridos:
+```
+email
+password
+```
+
 Retorna os dados do usuário ou um array com as mensagens de erro
 
 	$user=$BasicAuth->signin();
