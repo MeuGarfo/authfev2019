@@ -49,7 +49,7 @@ class Auth
             'id'=>@$_COOKIE['id'],
             'token'=>@$_COOKIE['token']
         ];
-        $user=$this->db->get('user', '*', $where);
+        $user=$this->db->get("users", '*', $where);
         if (isset($user['token_expiration'])) {
             if ($user['token_expiration']>time()) {
                 return $user;
@@ -73,7 +73,7 @@ class Auth
             $data=[
                 'token_expiration'=>time()-3600
             ];
-            $this->db->update('user', $data, ['id'=>$user['id']]);
+            $this->db->update("users", $data, ['id'=>$user['id']]);
         }
         return true;
     }
@@ -90,7 +90,7 @@ class Auth
         $where=[
             'email'=>$email
         ];
-        $user=$this->db->get('user', '*', $where);
+        $user=$this->db->get("users", '*', $where);
         if (!$user) {
             $error[]='invalid_email';
         }
@@ -106,10 +106,10 @@ class Auth
                 'token'=>$token,
                 'token_expiration'=>$limit
             ];
-            $this->db->update('user', $data, ['id'=>$id]);
+            $this->db->update("users", $data, ['id'=>$id]);
             setcookie("id", $id, $limit, '/');
             setcookie("token", $token, $limit, '/');
-            return $this->db->get("user", "*", ['id'=>$id]);
+            return $this->db->get("users", "*", ['id'=>$id]);
         } else {
             $error[]='invalid_password';
         }
@@ -142,7 +142,7 @@ class Auth
             if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
                 if (strlen($user['password'])>=8) {
                     $user['password']=password_hash($user['password'], PASSWORD_DEFAULT);
-                    if ($this->db->get('user', '*', ['email'=>$user['email']])) {
+                    if ($this->db->get("users", '*', ['email'=>$user['email']])) {
                         $error[]='invalid_email';
                     } else {
                         $data=[
@@ -162,7 +162,7 @@ class Auth
                                 $data['type']='user';
                             }
                         }
-                        $this->db->insert('user', $data);
+                        $this->db->insert("users", $data);
                         $id=$this->db->id();
                         if (is_numeric($id) && $id<>0) {
                             if (isset($_POST['email']) && isset($_POST['password'])) {

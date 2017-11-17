@@ -18,7 +18,7 @@ $db=[
 $Auth=new Auth($db);
 ```
 
-## Tabela user
+## Tabela users
 ```
 id
 email
