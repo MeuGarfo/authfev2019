@@ -19,19 +19,23 @@ class Auth
      * Seta a variável $db
      * @param array $db Dados SQL
      */
-    public function __construct(array $db)
+    public function __construct($db=null)
     {
-        $this->db = new Medoo([
-            // required
-            'database_type' => 'mysql',
-            'database_name' => $db['db_name'],
-            'server' => $db['db_server'],
-            'username' => $db['db_user'],
-            'password' => $db['db_password'],
-            // [optional]
-            'charset' => 'utf8',
-            'port' => 3306
-        ]);
+        if(is_null($db)){
+            die("db not found");
+        }else{
+            $this->db = new Medoo([
+                // required
+                'database_type' => 'mysql',
+                'database_name' => $db['db_name'],
+                'server' => $db['db_server'],
+                'username' => $db['db_user'],
+                'password' => $db['db_password'],
+                // [optional]
+                'charset' => 'utf8',
+                'port' => 3306
+            ]);
+        }
     }
     /**
     * Verifica se o usuário está autenticado
