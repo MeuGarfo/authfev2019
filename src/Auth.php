@@ -1,46 +1,19 @@
 <?php
-/**
-* Basic
-* Micro framework em PHP
-*/
-
 namespace Basic;
 
 use Medoo\Medoo;
 
-/**
- * Classe Auth
- */
 class Auth
 {
     private $db;
-
-    /**
-     * Seta a variável $db
-     * @param array $db Dados SQL
-     */
     public function __construct($db=null)
     {
-        if(is_null($db)){
-            die("db not found");
-        }else{
-            $this->db = new Medoo([
-                // required
-                'database_type' => 'mysql',
-                'database_name' => $db['db_name'],
-                'server' => $db['db_server'],
-                'username' => $db['db_user'],
-                'password' => $db['db_password'],
-                // [optional]
-                'charset' => 'utf8',
-                'port' => 3306
-            ]);
+        if (is_null($db)) {
+            die('medoo instance injection fail');
+        } else {
+            $this->db = $db;
         }
     }
-    /**
-    * Verifica se o usuário está autenticado
-    * @return mixed Retorna os dados dele caso esteja ou retorna false
-    */
     public function isAuth()
     {
         if (!isset($_COOKIE['id'])) {
@@ -64,10 +37,6 @@ class Auth
             return false;
         }
     }
-    /**
-    * Faz o logout do usuaŕio
-    * @return bool Retorna true ou false
-    */
     public function logout()
     {
         $user=$this->isAuth();
@@ -81,10 +50,6 @@ class Auth
         }
         return true;
     }
-    /**
-    * Autentica o usuário baseado nas variáveis $_POST
-    * @return mixed Dados do usuário ou mensagens de erro
-    */
     public function signin()
     {
         $this->logout();
@@ -121,11 +86,6 @@ class Auth
             return ['error'=>$error];
         }
     }
-    /**
-    * Cadastra de usuário baseado nas variáveis $_POST e no parâmetro $user
-    * @param  boolean $user Dados do usuário
-    * @return mixed         Faz o signin criando o token de autenticação
-    */
     public function signup($user=false)
     {
         $this->logout();
