@@ -2,19 +2,14 @@
 Sistema básico de autenticação
 
 ## Composer
-	composer require basicauth/basicauth
+composer require basicauth/basicauth
 
 ## Instalação
+O Auth funciona por injeção de dependência. Para tanto é necessário ter o [Medoo](http://medoo.in/) instalado e configurado.
 ```
 <?php
 require 'vendor/autoload.php';
-user Basic\Auth;
-$db=[
-	'db_server'=>'localhost',
-	'db_name'=>'test',
-	'db_user'=>'root',
-	'db_password'=>''
-];
+//$db=Instância do Medoo
 $Auth=new Auth($db);
 ```
 
@@ -31,12 +26,12 @@ token_expiration
 ## Dados do usuário
 Retorna os dados do usuário ou false
 
-	$user=$Auth->isAuth();
+$user=$Auth->isAuth();
 
 ## Logout
 Retorna sempre true
 
-	$user=$Auth->logout();
+$user=$Auth->logout();
 
 ## Signup
 Campos $_POST requeridos:
@@ -48,7 +43,7 @@ password
 
 Retorna os dados do usuário ou um array com as mensagens de erro
 
-	$user=$Auth->signup();
+$user=$Auth->signup();
 
 ## Mensagens de erro de signup
 - invalid_name (apenas letras, números e espaços)
@@ -64,7 +59,7 @@ password
 
 Retorna os dados do usuário ou um array com as mensagens de erro
 
-	$user=$Auth->signin();
+$user=$Auth->signin();
 
 ## Mensagens de erro de signin
 - invalid_email
