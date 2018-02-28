@@ -15,7 +15,7 @@ class Auth
             $this->db = $db;
         }
         if (!is_null($domain)) {
-            $this->domain='.'.$domain;
+            $this->domain=$domain;
         }
     }
     public function isAuth()
