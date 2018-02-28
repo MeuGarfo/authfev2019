@@ -6,12 +6,16 @@ use Medoo\Medoo;
 class Auth
 {
     private $db;
-    public function __construct($db=null)
+    private $domain;
+    public function __construct($db=null, $domain=null)
     {
         if (is_null($db)) {
             die('medoo instance injection fail');
         } else {
             $this->db = $db;
+        }
+        if (!is_null($domain)) {
+            $this->domain='.'.$domain;
         }
     }
     public function isAuth()
@@ -76,8 +80,13 @@ class Auth
                 'token_expiration'=>$limit
             ];
             $this->db->update("users", $data, ['id'=>$id]);
-            setcookie("id", $id, $limit, '/');
-            setcookie("token", $token, $limit, '/');
+            if (isset($this->domain)) {
+                setcookie("id", $id, $limit, '/', $this->domain);
+                setcookie("token", $token, $limit, '/', $this->domain);
+            } else {
+                setcookie("id", $id, $limit, '/');
+                setcookie("token", $token, $limit, '/');
+            }
             return $this->db->get("users", "*", ['id'=>$id]);
         } else {
             $error[]='invalid_password';
