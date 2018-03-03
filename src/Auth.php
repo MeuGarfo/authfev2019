@@ -10,7 +10,7 @@ class Auth
     public function __construct($db=null, $domain=null)
     {
         if (is_null($db)) {
-            die('medoo instance injection fail');
+            die('auth error: medoo dependency injection fail');
         } else {
             $this->db = $db;
         }
