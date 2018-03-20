@@ -44,8 +44,10 @@ class Auth
     public function logout()
     {
         $user=$this->isAuth();
-        setcookie("token", "", time()-3600, '/');
-        setcookie("id", "", time()-3600, '/');
+        if (php_sapi_name() <> "cli") {
+            setcookie("token", "", time()-3600, '/');
+            setcookie("id", "", time()-3600, '/');
+        }
         if ($user) {
             $data=[
                 'token_expiration'=>time()-3600
