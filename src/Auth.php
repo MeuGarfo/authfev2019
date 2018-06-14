@@ -110,7 +110,7 @@ class Auth
         }
         $user['name']=trim($user['name']);
         $user['name']=strtolower($user['name']);
-        $user['name']=ucfirst($user['name']);
+        $user['name']=ucwords($user['name']);
         $user['name']=preg_replace('/\s+/', ' ', $user['name']);
         $user['uuid']=$this->uuid();
         $error=false;
@@ -124,7 +124,8 @@ class Auth
                         $data=[
                             'email'=>$user['email'],
                             'name'=>$user['name'],
-                            'password'=>$user['password']
+                            'password'=>$user['password'],
+                            'uuid'=>$user['uuid']
                         ];
                         if (isset($user['type'])) {
                             $user['type']=trim(strtolower($user['type']));
