@@ -112,7 +112,7 @@ class Auth
         $user['name']=strtolower($user['name']);
         $user['name']=ucfirst($user['name']);
         $user['name']=preg_replace('/\s+/', ' ', $user['name']);
-        $user['uuid']=uuid();
+        $user['uuid']=$this->uuid();
         $error=false;
         if (preg_match('/^[a-z0-9 .\-]+$/i', $user['name']) && strlen($user['name'])>=3) {
             if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
