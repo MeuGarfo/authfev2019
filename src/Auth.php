@@ -112,6 +112,7 @@ class Auth
         $user['name']=strtolower($user['name']);
         $user['name']=ucfirst($user['name']);
         $user['name']=preg_replace('/\s+/', ' ', $user['name']);
+        $user['uuid']=uuid();
         $error=false;
         if (preg_match('/^[a-z0-9 .\-]+$/i', $user['name']) && strlen($user['name'])>=3) {
             if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
@@ -160,6 +161,21 @@ class Auth
         }
         if ($error) {
             return ['error'=>$error];
+        }
+    }
+    function uuid($limit=11){
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
+        $uuid = '';
+        for ($i = 0; $i < $limit; $i++) {
+            $uuid .= $characters[rand(0, mb_strlen($characters)-1)];
+        }
+        $where=[
+            'uuid'=>$uuid
+        ];
+        if($this->db->get('users','*',$where)){
+            return $this->uuid();
+        }else{
+            return $uuid;
         }
     }
 }
