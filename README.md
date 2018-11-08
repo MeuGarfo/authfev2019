@@ -19,6 +19,7 @@ id
 email
 name
 password
+type
 token
 token_expiration
 ```
@@ -39,6 +40,7 @@ Campos $_POST requeridos:
 name
 email
 password
+type (admin ou user)
 ```
 
 Retorna os dados do usuário ou um array com as mensagens de erro

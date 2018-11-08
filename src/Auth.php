@@ -105,7 +105,8 @@ class Auth
             $user=[
                 'name'=>@$_POST['name'],
                 'email'=>@$_POST['email'],
-                'password'=>@$_POST['password']
+                'password'=>@$_POST['password'],
+                'type'=>@trim(strtolower($_POST['type']))
             ];
         }
         $user['name']=trim($user['name']);
@@ -121,24 +122,16 @@ class Auth
                     if ($this->db->get("users", '*', ['email'=>$user['email']])) {
                         $error[]='invalid_email';
                     } else {
+                        if($user['type']<>'admin' && $user['type']<>'user'){
+                            $user['type']='user';
+                        }
                         $data=[
                             'email'=>$user['email'],
                             'name'=>$user['name'],
                             'password'=>$user['password'],
-                            'uuid'=>$user['uuid']
+                            'uuid'=>$user['uuid'],
+                            'type'=>$user['type']
                         ];
-                        if (isset($user['type'])) {
-                            $user['type']=trim(strtolower($user['type']));
-                            if (
-                                $user['type']=='admin' ||
-                                $user['type']=='super' ||
-                                $user['type']=='user'
-                            ) {
-                                $data['type']=$user['type'];
-                            } else {
-                                $data['type']='user';
-                            }
-                        }
                         $this->db->insert("users", $data);
                         $id=$this->db->id();
                         if (is_numeric($id) && $id<>0) {
