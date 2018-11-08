@@ -2,7 +2,7 @@
 Sistema básico de autenticação
 
 ## Composer
-composer require basicauth/basicauth
+composer require basic/auth
 
 ## Instalação
 O Auth funciona por injeção de dependência. Para tanto é necessário ter o [Medoo](http://medoo.in/) instalado e configurado.
