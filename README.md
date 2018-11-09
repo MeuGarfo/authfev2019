@@ -22,6 +22,8 @@ password
 type
 token
 token_expiration
+created_at
+uuid
 ```
 
 ## Dados do usuário
