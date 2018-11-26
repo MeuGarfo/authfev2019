@@ -130,7 +130,8 @@ class Auth
                             'name'=>$user['name'],
                             'password'=>$user['password'],
                             'uuid'=>$user['uuid'],
-                            'type'=>$user['type']
+                            'type'=>$user['type'],
+                            'created_at'=>time()
                         ];
                         $this->db->insert("users", $data);
                         $id=$this->db->id();
